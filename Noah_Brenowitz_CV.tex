@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[11pt,a4paper,sans]{moderncv} % Font sizes: 10, 11, or 12; paper sizes: a4paper, letterpaper, a5paper, legalpaper, executivepaper or landscape; font families: sans or roman
+\documentclass[11pt,letterpaper,roman]{moderncv} % Font sizes: 10, 11, or 12; paper sizes: a4paper, letterpaper, a5paper, legalpaper, executivepaper or landscape; font families: sans or roman
 
 \moderncvstyle{classic} % CV theme - options include: 'casual' (default), 'classic', 'oldstyle' and 'banking'
 \moderncvcolor{grey} % CV color - options include: 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
@@ -25,10 +25,33 @@
 % \photo[70pt][0.4pt]{picture} % The first bracket is the picture height, the second is the thickness of the frame around the picture (0pt for no frame)
 %\quote{"To work in a firm with a professional work driven environment where I can utilize and apply my knowledge."}
 
-%----------------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------
 
-\usepackage{multibib}
-\newcites{jrnl}{Journal papers}
+\usepackage[style=authoryear,sorting=ydnt,dashed=false]{biblatex}
+\renewbibmacro*{date}{}
+\renewbibmacro*{date+extrayear}{}
+\renewbibmacro*{issue+date}{}
+\newcommand*{\bibyear}{}
+
+\defbibenvironment{bibliography}
+  {\list
+     {\iffieldequals{year}{\bibyear}
+        {}
+        {\printfield{year}%
+         \savefield{year}{\bibyear}}}
+     {\setlength{\topsep}{0pt}% layout parameters based on moderncvstyleclassic.sty
+      \setlength{\labelwidth}{\hintscolumnwidth}%
+      \setlength{\labelsep}{\separatorcolumnwidth}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \leftmargin\labelwidth%
+      \advance\leftmargin\labelsep}%
+      \sloppy\clubpenalty4000\widowpenalty4000}
+  {\endlist}
+  {\item}
+
+
+  
+\addbibresource{articles.bib}
 \begin{document}
 
 \makecvtitle % Print the CV title
@@ -68,11 +91,11 @@ Supervisors: Peter Bandettini and Souheil Inati
 \cvitem{2011}{Graduated \emph{Summa cum Laude} with highest honors in Mathematics, New York University}
 \cvitem{2010}{\emph{Beta Gamma Sigma} honors society for business programs}
 \cvitem{2008--2011}{Dean's List, New York University}
+
 \section{Publications}
 \subsection{Refereed Articles}
-\nocitejrnl{*}
-\bibliographystylejrnl{plainyrrev}
-\bibliographyjrnl{articles}
+\nocite{*}
+\printbibliography[heading=none]
 
 \subsection{Presentations}
 \subsection{Posters and abstracts}
